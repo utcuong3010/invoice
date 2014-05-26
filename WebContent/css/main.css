@@ -1,0 +1,108 @@
+/*** icon ***/
+.icon-home {background-image: url(../images/icons/home.png) !important;}
+.icon-logout { background-image: url(../images/icons/logout.png) !important; }
+.icon-add { background-image: url(../images/icons/add.png) !important; }
+.icon-delete { background-image: url(../images/icons/delete.gif) !important; }
+.icon-export-excel{ background-image: url(../images/icons/excel.png) !important; }
+.icon-export-pdf{ background-image: url(../images/icons/pdf.png) !important; }
+.icon-search{ background-image: url(../images/icons/search.png) !important; }
+
+.icon-unlock{ background-image: url(../images/icons/unlock.png) !important; }
+.icon-lock{ background-image: url(../images/icons/lock.png) !important; }
+
+.icon-users { background-image: url(../images/icons/users.png) !important; }
+.icon-user { background-image: url(../images/icons/user.png) !important; }
+.icon-edit-user { background-image: url(../images/icons/edit-user.png) !important; }
+
+.ux-row-expander-box 
+{
+    margin-left: 50px;
+    background-color: aqua;
+}
+
+@charset "utf-8";
+/* CSS Document */
+.table_list {
+	width:100%;
+	border:1px solid #EAEAEA;
+	border-width:1px 0 1px 1px;
+}
+.table_list .head td{
+	background:url(../images/table_list_bghead.png) 0 0 repeat-x;
+	padding:5px;
+} 
+
+.table_list td{
+	border-right:1px solid #EAEAEA; 
+	padding:3px 5px;
+} 
+
+.table_list .row1 td{
+	background:#f4f4f4; 
+
+}
+.table_list .row2 td{
+	background:#fff; 
+}
+
+#grid
+{
+	width: 320px;
+	height: 200px;
+	border-right: 1pt gray solid;
+	overflow: scroll;
+	clear:both;
+}
+.row
+{
+	float: left;
+	border-top: 1pt gray solid;
+	overflow: hidden;
+}
+.cell
+{
+	float: left;
+	border-left: 1pt gray solid;
+	padding: 5px;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.databox {
+     background: #f9f9f9;
+     font-size: 13px;
+     color: #333;
+     border-bottom: 1px solid #e3e3e3;
+     padding: 10px;
+}
+ .checked {
+     background: #999;
+     color: #fff;
+ }
+
+
+#container {
+	height: 200px;		
+}
+* {margin:0; padding:0; list-style-type:none;}
+#footer {
+	overflow:hidden; 
+	background:#c6c6c6;
+	 padding:10px 0 0 0; 
+	 font-family:Arial, Helvetica, sans-serif; 
+	 font-size:12px;
+		height: 120px;
+}
+
+#footer .line {margin:5px 0 0 10px;}
+#footer a {color:#006699; text-decoration:none;text-align: center;}
+#footer li p {
+	margin-top: 1px;
+}
+#footer p {padding-top:50px;}
+#footer .info {
+	float: right;
+	margin-right: 20px;	
+}
+#footer .info p  {
+	}

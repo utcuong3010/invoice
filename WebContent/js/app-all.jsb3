@@ -1,0 +1,98 @@
+{
+    "projectName": "Project Name",
+    "licenseText": "Copyright(c) 2012 Company Name",
+    "builds": [
+        {
+            "name": "All Classes",
+            "target": "all-classes.js",
+            "options": {
+                "debug": true
+            },
+            "files": [
+            	{
+            		"path": "app/controller/",
+            		"name": "App.js"
+            	},
+            	{
+            		"path": "app/controller/",
+            		"name": "Invoices.js"
+            	},
+            	{
+            		"path": "app/controller/",
+            		"name": "User.js"
+            	},
+            	{
+            		"path": "app/model/",
+            		"name": "Invoice.js"
+            	},
+            	{
+            		"path": "app/model/",
+            		"name": "User.js"
+            	},
+            	{
+            		"path": "app/store/",
+            		"name": "Invoice.js"
+            	},
+            	{
+            		"path": "app/store/",
+            		"name": "User.js"
+            	},
+            	{
+            		"path": "app/view/",
+            		"name": "Toolbar.js"
+            	},
+            	{
+            		"path": "app/view/",
+            		"name": "Viewport.js"
+            	},
+            	{
+            		"path": "app/view/invoice/",
+            		"name": "CentralEdit.js"
+            	},
+            	{
+            		"path": "app/view/invoice/",
+            		"name": "CentralList.js"
+            	},
+            	{
+            		"path": "app/view/invoice/",
+            		"name": "SupplierEdit.js"
+            	},
+            	{
+            		"path": "app/view/invoice/",
+            		"name": "SupplierList.js"
+            	},
+            	{
+            		"path": "app/view/user/",
+            		"name": "Edit.js"
+            	},
+            	{
+            		"path": "app/view/user/",
+            		"name": "EditUser.js"
+            	},
+            	{
+            		"path": "app/view/user/",
+            		"name": "List.js"
+            	}            	   
+            
+            
+            
+            ]
+        },
+        {
+            "name": "Application - Production",
+            "target": "app-all.js",
+            "compress": true,
+            "files": [
+                {
+                    "path": "",
+                    "name": "all-classes.js"
+                },
+                {
+                    "path": "",
+                    "name": "app.js"
+                }
+            ]
+        }
+    ],
+    "resources": []
+}

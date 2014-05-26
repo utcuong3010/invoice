@@ -1,0 +1,140 @@
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+	<context:annotation-config />      
+    <context:component-scan base-package="com.bubanking"/>
+    
+    
+   	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:database.properties</value>
+		</property>
+	</bean>
+
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close" lazy-init="true">
+		<property name="driverClass" value="${dataSource.driver}"/>
+        <property name="jdbcUrl" value="${dataSource.url}"/>
+        <property name="user" value="${dataSource.username}"/>
+        <property name="password" value="${dataSource.password}"/>
+		
+		<property name="acquireIncrement" value="${c3p0.acquireIncrement}"/>
+        <property name="initialPoolSize" value="${c3p0.initialPoolSize}"/>
+        <property name="minPoolSize" value="${c3p0.minPoolSize}"/>
+        <property name="maxPoolSize" value="${c3p0.maxPoolSize}"/>
+        <property name="maxIdleTime" value="${c3p0.maxIdleTime}"/>
+
+        <property name="checkoutTimeout" value="${c3p0.checkoutTimeout}"/>
+        <property name="idleConnectionTestPeriod" value="${c3p0.idleConnectionTestPeriod}"/>
+
+        <property name="maxStatements" value="${c3p0.maxStatements}"/>
+        <property name="maxStatementsPerConnection" value="${c3p0.maxStatementsPerConnection}"/>
+
+        <property name="numHelperThreads" value="${c3p0.numHelperThreads}"/>
+
+        <property name="acquireRetryAttempts" value="${c3p0.acquireRetryAttempts}"/>
+        <property name="acquireRetryDelay" value="${c3p0.acquireRetryDelay}"/>
+        <property name="breakAfterAcquireFailure" value="${c3p0.breakAfterAcquireFailure}"/>
+	</bean>
+
+	<!-- Hibernate session factory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>	
+				<prop key="hibernate.max_fetch_depth">1</prop>
+						
+			</props>
+		</property>
+		<property name="annotatedClasses">
+			<list>
+				<value>com.bubanking.models.Invoice</value>
+				<value>com.bubanking.models.Category</value>
+				<value>com.bubanking.models.Group</value>			
+				<value>com.bubanking.models.User</value> 
+				<value>com.bubanking.models.Role</value> 		
+						
+			</list>
+		</property>
+	</bean>
+	    
+	<!-- transaction manager -->
+	<bean id="transactionManager" 
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>		
+	</bean>
+	
+	<bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager" ref="transactionManager"/>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				
+			</props>
+		</property>	
+	</bean>
+	
+	<bean id="hibernateInterceptor" class="org.springframework.orm.hibernate3.HibernateInterceptor">
+		<property name="sessionFactory"  ref="sessionFactory"/>
+	</bean>	
+	<!-- services -->
+	<bean id="invoiceService" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="invoiceServiceImpl"></property>
+		<property name="interceptorNames">
+			<list>
+				<value>transactionInterceptor</value>
+				<value>hibernateInterceptor</value>
+			</list>		
+		</property>	
+	</bean>
+	<bean id="invoiceServiceImpl" class="com.bubanking.services.impl.InvoiceServiceImpl">
+		 <property name="invoiceDao" ref="invoiceDao"/>
+		<property name="categoryDao" ref="categoryDao"/> 
+		<property name="userDao" ref="userDao"/> 
+	</bean>
+	
+	<bean id="userService" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="userServiceImpl"></property>
+		<property name="interceptorNames">
+			<list>
+				<value>transactionInterceptor</value>
+				<value>hibernateInterceptor</value>
+			</list>		
+		</property>	
+	</bean>
+	<bean id="userServiceImpl" class="com.bubanking.services.impl.UserServiceImpl">
+		<property name="userDao" ref="userDao"/>
+		<property name="groupDao" ref="groupDao"/>
+	</bean>
+
+	<!-- daos -->
+	<bean id="invoiceDao" class="com.bubanking.daos.impl.InvoiceDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>	
+	</bean>
+	<bean id="userDao" class="com.bubanking.daos.impl.UserDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>	
+	</bean>
+	<bean id="categoryDao" class="com.bubanking.daos.impl.CategoryDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="groupDao" class="com.bubanking.daos.impl.GroupDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+
+</beans>                
